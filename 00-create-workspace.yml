@@ -1,1 +1,23 @@
+---
+- name: Create Directories and Set Permissions
+  hosts: localhost
+  become: yes  # Run tasks with sudo
 
+  tasks:
+    - name: Create directories
+      file:
+        path: "{{ item }}"
+        state: directory
+      loop:
+        - /opt/blocklist/temp
+        - /opt/blocklist/site
+        - /opt/blocklist/scripts
+
+    - name: Set permissions to 755
+      file:
+        path: "{{ item }}"
+        mode: '0755'
+      loop:
+        - /opt/blocklist/temp
+        - /opt/blocklist/site
+        - /opt/blocklist/scripts
